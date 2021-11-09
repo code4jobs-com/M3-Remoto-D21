@@ -1,5 +1,9 @@
 function Cabecera() {
-  return <h1>Videoclub del barrio de siempre, de toda la vida. </h1>;
+  return (
+    <div className="cabecera">
+      <h1>Videoclub Patatero </h1>
+    </div>
+  );
 }
 
 export default Cabecera;
