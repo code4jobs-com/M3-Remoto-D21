@@ -21,6 +21,7 @@ function App() {
       return (
         <div className="card">
           <p>{pelicula.sinopsis}</p>
+          <Link to="/">Volver</Link>
         </div>
       );
     }
@@ -28,7 +29,6 @@ function App() {
 
   function Peliculas(props) {
     return props.peliculas.map((pelicula, index) => {
-      console.log("/" + pelicula.titulo);
       return (
         <>
           <Pelicula key={index} full={true} pelicula={pelicula} />
