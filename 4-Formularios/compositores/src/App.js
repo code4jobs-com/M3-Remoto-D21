@@ -1,15 +1,32 @@
 import { useState } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import "./App.css";
 
+//Components Import
+import Lista from "./Lista";
+import Eliminar from "./Eliminar";
+import Cabecera from "./Cabecera";
+
 function App() {
   const [input, setInput] = useState("");
-  const [borrar, setBorrar] = useState("");
   const [feedback, setFeedback] = useState("");
   const [lista, setLista] = useState([
-    "Wolfgang Amadeus Mozart",
-    "Ludwig van Beethoven",
-    "Johann Sebastian Bach",
+    {
+      nombre: "Mozart",
+      fecha: 1756,
+      canciones: ["Symphonie Nr 40", "Don Giovanni"],
+    },
+    {
+      nombre: "Ludwig van Beethoven",
+      fecha: 1770,
+      canciones: ["Symphonie No.5", "Piano Sonata No.32"],
+    },
+    {
+      nombre: "Johann Sebastian Bach",
+      fecha: 1685,
+      canciones: ["Vivace", "Largo ma non tanto"],
+    },
   ]);
 
   function darFeedback(string) {
@@ -18,56 +35,51 @@ function App() {
   }
 
   return (
-    <>
-      <ul>
-        {lista.map((compositor) => (
-          <li>{compositor}</li>
-        ))}
-      </ul>
+    <BrowserRouter>
+      <Cabecera />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <ul>
+                <Lista lista={lista} />
+              </ul>
 
-      <div>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+              <div>
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                />
+                <button
+                  onClick={() => {
+                    let array = [...lista];
+                    array.push({ nombre: input });
+                    setLista(array);
+                    setInput("");
+                    darFeedback("Grabado correctamente");
+                  }}
+                >
+                  Escribir
+                </button>
+              </div>
+            </>
+          }
         />
-        <button
-          onClick={() => {
-            let array = [...lista];
-            array.push(input);
-            setLista(array);
-            setInput("");
-            darFeedback("Grabado correctamente");
-          }}
-        >
-          Escribir
-        </button>
-      </div>
-      <div>
-        <input
-          type="text"
-          value={borrar}
-          onChange={(e) => setBorrar(e.target.value)}
+        <Route
+          path="/eliminar"
+          element={
+            <Eliminar
+              lista={lista}
+              setLista={setLista}
+              darFeedback={darFeedback}
+            />
+          }
         />
-        <button
-          onClick={() => {
-            let array = [...lista];
-            let index = array.indexOf(borrar);
-            if (index > 0) {
-              array.splice(index, 1);
-              darFeedback(`${borrar} eliminado`);
-              setLista(array);
-              setBorrar("");
-            } else {
-              darFeedback(`${borrar} no se ha encontrado`);
-            }
-          }}
-        >
-          Borrar
-        </button>
-      </div>
+      </Routes>
       <p>{feedback}</p>
-    </>
+    </BrowserRouter>
   );
 }
 
