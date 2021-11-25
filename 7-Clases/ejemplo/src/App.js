@@ -36,8 +36,8 @@ class Patata extends React.Component {
 } */
 
 function Libro(props) {
-  const [titulo, setTitulo] = useState(props.titulo);
-  const [autor, setAutor] = useState(props.autor);
+  const [titulo] = useState(props.titulo);
+  const [autor] = useState(props.autor);
   const [paginas, setPaginas] = useState(1121);
 
   return (
