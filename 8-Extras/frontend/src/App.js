@@ -26,7 +26,6 @@ function App() {
       withCredentials: true,
       url: "http://localhost:3001/perfil",
     }).then((res) => {
-      console.log(res.data.mensaje);
       setMensaje(res.data.mensaje);
       res.data.logged ? setVariante("success") : setVariante("danger");
     });
